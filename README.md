@@ -1,30 +1,37 @@
-Análise de Vendas do Walmart
-Limpeza e análise exploratória de dados semanais de vendas de lojas Walmart, relacionando vendas com feriados, inflação (CPI), desemprego, temperatura e preço do combustível.
+# Detecção de Phishing em Páginas Web
 
-Fonte dos dados
-Dataset Walmart Sales (Kaggle), com vendas semanais (Weekly_Sales) por loja (Store), incluindo indicador de semana de feriado (Holiday_Flag), temperatura, preço do combustível, CPI e taxa de desemprego.
+Análise exploratória de um dataset com características estruturais de URLs, buscando entender quais atributos mais se relacionam com páginas de phishing.
 
-O que o script faz
-Carrega Walmart_Sales.csv e inspeciona tipos de dados e valores ausentes.
-Limpeza:
-Converte Date para datetime e depois padroniza no formato MM-DD-AAAA.
-Arredonda Weekly_Sales (2 casas), Temperature (inteiro), Fuel_Price (2 casas), CPI (3 casas) e Unemployment (3 casas).
-Ordena os dados por Store e Date.
-Exporta o resultado limpo para Walmart_Sales_clean.csv.
-Análises:
-Vendas médias em semanas de feriado, agrupadas por mês.
-Desemprego médio por loja, ordenado do menor para o maior.
-Correlação entre CPI e vendas — geral, e separada entre semanas com e sem feriado.
-Matriz de correlação entre vendas, temperatura, preço do combustível, CPI e desemprego.
-Como executar
+## Fonte dos dados
+
+Dataset **Web Page Phishing** (Kaggle), com ~100 mil registros. Cada linha representa uma URL, descrita por atributos como comprimento, número de pontos, hífens, barras, símbolos especiais (`@`, `%`, `$`, `#`, etc.) e número de redirecionamentos, além da variável alvo `phishing` (1 = phishing, 0 = legítima).
+
+## O que o script faz
+
+1. Carrega o CSV e mostra visão geral (`shape`, `head`, `dtypes`).
+2. Verifica a **distribuição da variável alvo** (`phishing`).
+3. Calcula a **correlação de cada atributo com `phishing`**, ordenada tanto pelo valor real (para ver os mais positivos/negativos) quanto pelo valor absoluto (para achar as correlações mais fracas).
+4. Compara `url_length` (comprimento da URL) entre as classes phishing/legítima com estatísticas descritivas (`describe`).
+5. Compara `n_redirection` (número de redirecionamentos) entre as classes da mesma forma.
+6. Gera um **heatmap de correlação** de todas as variáveis do dataset (`seaborn`).
+
+## Como executar
+
+```bash
 pip install -r requirements.txt
-python analise_vendas_walmart.py
-Estrutura do repositório
-├── analise_vendas_walmart.py     # script principal da análise
-├── Walmart_Sales.csv             # dataset original
-├── Walmart_Sales_clean.csv       # dataset após limpeza (gerado pelo script)
-├── Relatorio_Walmart_Sales.docx  # relatório formatado com os resultados
+python analise_phishing.py
+```
+
+## Estrutura do repositório
+
+```
+├── analise_phishing.py         # script principal da análise
+├── web-page-phishing.csv       # dataset original (~100k registros)
+├── relatorio_phishing.docx     # relatório formatado com os resultados
 ├── requirements.txt
 └── README.md
-Relatório
-O arquivo Relatorio_Walmart_Sales.docx traz a interpretação dos resultados, incluindo o efeito dos feriados nas vendas e a relação entre indicadores econômicos e o desempenho de vendas.
+```
+
+## Relatório
+
+O arquivo `relatorio_phishing.docx` documenta a análise em português, com a interpretação das correlações encontradas e quais características de URL mais indicam risco de phishing.
